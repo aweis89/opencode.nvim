@@ -22,7 +22,6 @@ M.defaults = {
       ['<leader>ot'] = { 'toggle_focus', desc = 'Toggle focus' },
       ['<leader>oT'] = { 'timeline', desc = 'Session timeline' },
       ['<leader>oq'] = { 'close', desc = 'Close Opencode window' },
-      ['<leader>oQ'] = { 'quick_chat', desc = 'Quick chat with current context', mode = { 'n', 'x' } },
       ['<leader>os'] = { 'select_session', desc = 'Select session' },
       ['<leader>oR'] = { 'rename_session', desc = 'Rename session' },
       ['<leader>op'] = { 'configure_provider', desc = 'Configure provider' },
@@ -42,6 +41,7 @@ M.defaults = {
       ['<leader>oPa'] = { 'permission_accept', desc = 'Accept permission' },
       ['<leader>oPA'] = { 'permission_accept_all', desc = 'Accept all permissions' },
       ['<leader>oPd'] = { 'permission_deny', desc = 'Deny permission' },
+      ['<leader>o/'] = { 'quick_chat', desc = 'Quick chat with current context', mode = { 'n', 'x' } },
     },
     output_window = {
       ['<esc>'] = { 'close' },
@@ -90,6 +90,9 @@ M.defaults = {
     history_picker = {
       delete_entry = { '<C-d>', mode = { 'i', 'n' } },
       clear_all = { '<C-X>', mode = { 'i', 'n' } },
+    },
+    quick_chat = {
+      cancel = { '<C-c>', mode = { 'i', 'n' } },
     },
   },
   ui = {
@@ -220,18 +223,6 @@ M.defaults = {
 }
 
 M.values = vim.deepcopy(M.defaults)
-
----Get function names from keymap config, used when normalizing legacy config
----@param keymap_config table
-local function get_function_names(keymap_config)
-  local names = {}
-  for _, config in pairs(keymap_config) do
-    if type(config) == 'table' and config[1] then
-      table.insert(names, config[1])
-    end
-  end
-  return names
-end
 
 local function update_keymap_prefix(prefix, default_prefix)
   if prefix == default_prefix or not prefix then
