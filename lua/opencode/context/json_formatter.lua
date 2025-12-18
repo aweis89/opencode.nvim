@@ -67,7 +67,7 @@ function M.format_diagnostics_part(diagnostics, range)
       local short_msg = diag.message:gsub('%s+', ' '):gsub('^%s', ''):gsub('%s$', '')
       table.insert(
         diag_list,
-        { msg = short_msg, severity = diag.severity, pos = 'l' .. diag.lnum + 1 .. ':c' .. diag.col + 1 }
+        { msg = short_msg, severity = diag.severity, pos = 'l' .. (diag.lnum + 1) .. ':c' .. (diag.col + 1) }
       )
     end
   end
