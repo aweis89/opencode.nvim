@@ -132,7 +132,8 @@ M.defaults = {
       text = {
         wrap = false,
       },
-      dynamic = false,
+      -- Auto-hide input window when prompt is submitted or focus switches to output window
+      dynamic = true,
     },
     completion = {
       file_sources = {
