@@ -116,9 +116,7 @@ function M.select_history()
 end
 
 function M.toggle_pane()
-  return core.open({ new_session = false, focus = 'output' }):and_then(function()
-    ui.toggle_pane()
-  end)
+  ui.toggle_pane()
 end
 
 ---@param from_snapshot_id? string
