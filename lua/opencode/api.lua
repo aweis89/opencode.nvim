@@ -22,6 +22,10 @@ function M.toggle_zoom()
   require('opencode.ui.ui').toggle_zoom()
 end
 
+function M.toggle_input()
+  input_window.toggle()
+end
+
 function M.open_input()
   return core.open({ new_session = false, focus = 'input', start_insert = true })
 end
@@ -968,6 +972,11 @@ M.commands = {
   toggle_zoom = {
     desc = 'Toggle window zoom',
     fn = M.toggle_zoom,
+  },
+
+  toggle_input = {
+    desc = 'Toggle input window visibility',
+    fn = M.toggle_input,
   },
 
   swap = {
