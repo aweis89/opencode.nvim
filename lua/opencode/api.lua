@@ -27,6 +27,10 @@ function M.toggle_input()
 end
 
 function M.open_input()
+  -- Show input window if it's hidden
+  if input_window.is_hidden() then
+    input_window._show()
+  end
   return core.open({ new_session = false, focus = 'input', start_insert = true })
 end
 
@@ -277,6 +281,20 @@ M.submit_input_prompt = Promise.async(function()
   input_window.handle_submit()
 end)
 
+M.submit_and_hide_input = Promise.async(function()
+  if state.display_route then
+    state.display_route = nil
+    ui.render_output(true)
+  end
+
+  input_window.handle_submit()
+
+  -- Hide input window after submitting
+  if not input_window.is_hidden() then
+    input_window._hide()
+  end
+end)
+
 function M.mention_file()
   local picker = require('opencode.ui.file_picker')
   local context = require('opencode.context')
@@ -308,6 +326,10 @@ function M.slash_commands()
 end
 
 function M.focus_input()
+  -- Show input window if it's hidden
+  if input_window.is_hidden() then
+    input_window._show()
+  end
   ui.focus_input({ restore_position = true, start_insert = true })
 end
 
