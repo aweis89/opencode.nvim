@@ -276,10 +276,10 @@ M.submit_input_prompt = Promise.async(function()
     ui.render_output(true)
   end
 
-  input_window.handle_submit()
+  local message_sent = input_window.handle_submit()
 
-  -- Hide input window after submitting if dynamic input is enabled
-  if config.ui.input.dynamic and not input_window.is_hidden() then
+  -- Only hide input window if a message was actually sent (not slash commands, shell commands, etc.)
+  if message_sent and config.ui.input.dynamic and not input_window.is_hidden() then
     input_window._hide()
   end
 end)

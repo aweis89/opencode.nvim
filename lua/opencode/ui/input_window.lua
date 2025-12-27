@@ -53,10 +53,12 @@ function M.close()
   pcall(vim.api.nvim_buf_delete, state.windows.input_buf, { force = true })
 end
 
+---Handle submit action from input window
+---@return boolean true if a message was sent to the AI, false otherwise
 function M.handle_submit()
   local windows = state.windows
   if not windows or not M.mounted(windows) then
-    return
+    return false
   end
   ---@cast windows { input_buf: integer }
 
@@ -68,21 +70,22 @@ function M.handle_submit()
   })
 
   if input_content == '' then
-    return
+    return false
   end
 
   if input_content:match('^!') then
     M._execute_shell_command(input_content:sub(2))
-    return
+    return false
   end
 
   local key = config.get_key_for_function('input_window', 'slash_commands') or '/'
   if input_content:match('^' .. key) then
     M._execute_slash_command(input_content)
-    return
+    return false
   end
 
   require('opencode.core').send_message(input_content)
+  return true
 end
 
 M._execute_shell_command = function(command)
