@@ -196,7 +196,13 @@ function M.setup_autocmds(windows, group)
     callback = function()
       vim.cmd('stopinsert')
       state.last_focused_opencode_window = 'output'
-      require('opencode.ui.input_window').refresh_placeholder(state.windows)
+      local input_window = require('opencode.ui.input_window')
+      input_window.refresh_placeholder(state.windows)
+
+      -- Auto-hide input window when dynamic input is enabled
+      if config.ui.input.dynamic and not input_window.is_hidden() then
+        input_window._hide()
+      end
     end,
   })
 
@@ -206,7 +212,13 @@ function M.setup_autocmds(windows, group)
     callback = function()
       vim.cmd('stopinsert')
       state.last_focused_opencode_window = 'output'
-      require('opencode.ui.input_window').refresh_placeholder(state.windows)
+      local input_window = require('opencode.ui.input_window')
+      input_window.refresh_placeholder(state.windows)
+
+      -- Auto-hide input window when dynamic input is enabled
+      if config.ui.input.dynamic and not input_window.is_hidden() then
+        input_window._hide()
+      end
     end,
   })
 

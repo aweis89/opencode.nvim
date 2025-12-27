@@ -132,6 +132,7 @@ M.defaults = {
       text = {
         wrap = false,
       },
+      dynamic = false,
     },
     completion = {
       file_sources = {

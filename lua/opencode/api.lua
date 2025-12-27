@@ -27,10 +27,6 @@ function M.toggle_input()
 end
 
 function M.open_input()
-  -- Show input window if it's hidden
-  if input_window.is_hidden() then
-    input_window._show()
-  end
   return core.open({ new_session = false, focus = 'input', start_insert = true })
 end
 
@@ -59,7 +55,11 @@ function M.paste_image()
 end
 
 M.toggle = Promise.async(function(new_session)
-  local focus = state.last_focused_opencode_window or 'input' ---@cast focus 'input' | 'output'
+  -- When dynamic input is enabled, always focus input; otherwise use last focused
+  local focus = 'input' ---@cast focus 'input' | 'output'
+  if not config.ui.input.dynamic then
+    focus = state.last_focused_opencode_window or 'input'
+  end
   if state.windows == nil then
     core.open({ new_session = new_session == true, focus = focus, start_insert = false }):await()
   else
@@ -279,18 +279,9 @@ M.submit_input_prompt = Promise.async(function()
   end
 
   input_window.handle_submit()
-end)
 
-M.submit_and_hide_input = Promise.async(function()
-  if state.display_route then
-    state.display_route = nil
-    ui.render_output(true)
-  end
-
-  input_window.handle_submit()
-
-  -- Hide input window after submitting
-  if not input_window.is_hidden() then
+  -- Hide input window after submitting if dynamic input is enabled
+  if config.ui.input.dynamic and not input_window.is_hidden() then
     input_window._hide()
   end
 end)
@@ -326,10 +317,6 @@ function M.slash_commands()
 end
 
 function M.focus_input()
-  -- Show input window if it's hidden
-  if input_window.is_hidden() then
-    input_window._show()
-  end
   ui.focus_input({ restore_position = true, start_insert = true })
 end
 

@@ -272,6 +272,12 @@ function M.recover_input(windows)
 end
 
 function M.focus_input()
+  -- Show input window if it's hidden
+  if M._hidden then
+    M._show()
+    return
+  end
+
   if not M.mounted() then
     return
   end
