@@ -52,7 +52,7 @@ M.defaults = {
       ['<tab>'] = { 'toggle_pane', mode = { 'n', 'i' } },
       ['i'] = { 'focus_input' },
       ['gr'] = { 'references', desc = 'Browse code references' },
-      ['<leader>oa'] = { 'toggle_input', mode = { 'n' }, desc = 'Toggle input window' },
+      ['<M-i>'] = { 'toggle_input', mode = { 'n' }, desc = 'Toggle input window' },
       ['<leader>oS'] = { 'select_child_session' },
       ['<leader>oD'] = { 'debug_message' },
       ['<leader>oO'] = { 'debug_output' },
